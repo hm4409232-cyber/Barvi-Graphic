@@ -1,0 +1,32 @@
+{
+  "entities": {
+    "student": {
+      "title": "Student",
+      "description": "Student admission application details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "fatherName": { "type": "string" },
+        "education": { "type": "string" },
+        "age": { "type": "number" },
+        "address": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "selectedCourse": { "type": "string" },
+        "totalFee": { "type": "number" },
+        "paidFee": { "type": "number" },
+        "remainingFee": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "fatherName", "phoneNumber", "selectedCourse", "status"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "student",
+      "description": "Individual student applications"
+    }
+  }
+}
