@@ -1,48 +1,33 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../services/firebase';
 
 export default function AdminDashboard() {
-  const [students, setStudents] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      const querySnapshot = await getDocs(collection(db, 'students'));
-      setStudents(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    };
-    fetchStudents();
-  }, []);
-
-  const handleApprove = async (id: string, name: string) => {
-    await updateDoc(doc(db, 'students', id), { status: 'approved' });
-    alert(`Approved ${name}. WhatsApp API would trigger here.`);
-    setStudents(students.map(s => s.id === id ? {...s, status: 'approved'} : s));
-  };
+    if (auth.currentUser?.email !== 'hasanbarvi@gmail.com') {
+      alert('Access Denied: Only Admin can access this page.');
+      navigate('/login');
+    }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-bg p-8 font-sans">
       <h2 className="text-2xl font-bold mb-8 text-text-main">Admin Dashboard</h2>
-      <div className="grid gap-6">
-        {students.map(s => (
-          <div key={s.id} className="bg-white p-6 rounded-lg border border-border flex justify-between items-center transition-all hover:shadow-md">
-            <div>
-              <p className="font-bold text-text-main">{s.name}</p>
-              <p className="text-sm text-text-muted capitalize">Status: {s.status}</p>
-              <p className="text-sm text-text-muted">Course: {s.selectedCourse}</p>
-            </div>
-            {s.status === 'pending' && (
-                <button 
-                  onClick={() => handleApprove(s.id, s.name)} 
-                  className="bg-primary text-white px-4 py-2 rounded-md hover:bg-accent transition-colors text-sm font-semibold"
-                >
-                  Approve
-                </button>
-            )}
-           {s.status === 'approved' && (
-              <span className="text-sm font-semibold text-primary bg-primary-light px-3 py-1 rounded-full">Approved</span>
-           )}
-          </div>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-lg border border-border shadow-sm">
+            <h3 className="font-bold text-primary mb-2">Student Management</h3>
+            <p className="text-text-muted text-sm">Add, Edit, View Students</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg border border-border shadow-sm">
+            <h3 className="font-bold text-primary mb-2">Daily Reports</h3>
+            <p className="text-text-muted text-sm">Mark attendance, Add Academic Reports</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg border border-border shadow-sm">
+            <h3 className="font-bold text-primary mb-2">Finance</h3>
+            <p className="text-text-muted text-sm">Manage Income & Expenses</p>
+        </div>
       </div>
     </div>
   );
