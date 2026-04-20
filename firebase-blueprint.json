@@ -2,31 +2,55 @@
   "entities": {
     "student": {
       "title": "Student",
-      "description": "Student admission application details",
+      "description": "Student profile",
       "type": "object",
       "properties": {
         "uid": { "type": "string" },
         "name": { "type": "string" },
         "fatherName": { "type": "string" },
-        "education": { "type": "string" },
-        "age": { "type": "number" },
-        "address": { "type": "string" },
-        "phoneNumber": { "type": "string" },
-        "whatsappNumber": { "type": "string" },
-        "selectedCourse": { "type": "string" },
-        "totalFee": { "type": "number" },
-        "paidFee": { "type": "number" },
-        "remainingFee": { "type": "number" },
-        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
-        "createdAt": { "type": "string" }
-      },
-      "required": ["name", "fatherName", "phoneNumber", "selectedCourse", "status"]
+        "status": { "type": "string" }
+      }
+    },
+    "report": {
+      "title": "Report",
+      "description": "Daily academic progress report",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "date": { "type": "string" },
+        "sabaq": { "type": "string" },
+        "sabqi": { "type": "string" },
+        "manzil": { "type": "string" },
+        "duain": { "type": "string" },
+        "namaz": { "type": "string" }
+      }
+    },
+    "finance": {
+      "title": "Finance",
+      "description": "Income and expenses",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "description": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" }
+      }
+    },
+    "attendance": {
+      "title": "Attendance",
+      "description": "Daily student attendance",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "date": { "type": "string" },
+        "status": { "type": "string", "enum": ["present", "absent"] }
+      }
     }
   },
   "firestore": {
-    "/students/{studentId}": {
-      "schema": "student",
-      "description": "Individual student applications"
-    }
+    "/students/{studentId}": { "schema": "student", "description": "Student profiles" },
+    "/reports/{reportId}": { "schema": "report", "description": "Student reports" },
+    "/finance/{financeId}": { "schema": "finance", "description": "Financial records" },
+    "/attendance/{attendanceId}": { "schema": "attendance", "description": "Attendance logs" }
   }
 }
