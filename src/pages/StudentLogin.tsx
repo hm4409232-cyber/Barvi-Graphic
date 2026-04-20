@@ -25,13 +25,27 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg p-4 font-sans">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg border border-border w-full max-w-sm shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-primary">{isRegister ? 'Student Register' : 'Student Login'}</h2>
-        <input type="email" placeholder="Email" className="w-full p-3 border border-border rounded-md mb-4" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" className="w-full p-3 border border-border rounded-md mb-6" value={password} onChange={e => setPassword(e.target.value)} />
-        <button type="submit" className="w-full bg-primary text-white p-3 rounded-md hover:bg-accent transition-colors font-semibold mb-4">{isRegister ? 'Register' : 'Login'}</button>
-        <button type="button" onClick={() => setIsRegister(!isRegister)} className="w-full text-primary hover:text-accent font-medium">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-sans">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-xs text-center">
+        <h2 className="text-xl font-bold mb-6 text-gray-800">{isRegister ? 'Student Register' : 'Student Login'}</h2>
+        <input 
+          type="text" 
+          placeholder="Name/Email" 
+          className="w-full p-2 border border-gray-300 rounded mb-4" 
+          value={email} 
+          onChange={e => setEmail(e.target.value)} 
+        />
+        <input 
+          type="password" 
+          placeholder="Password" 
+          className="w-full p-2 border border-gray-300 rounded mb-4" 
+          value={password} 
+          onChange={e => setPassword(e.target.value)} 
+        />
+        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition font-semibold">
+            {isRegister ? 'Register' : 'Login'}
+        </button>
+        <button type="button" onClick={() => setIsRegister(!isRegister)} className="w-full mt-4 text-sm text-gray-600 underline">
             {isRegister ? 'Already have an account? Login' : 'Need an account? Register'}
         </button>
       </form>
